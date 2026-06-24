@@ -23,7 +23,7 @@ st.write("API key found:", bool(api_key))
 
 # Initialize Gemini
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-1.5-flash",
     google_api_key=api_key,
     temperature=0
 )
@@ -72,8 +72,6 @@ if uploaded_file:
             {blood_report}
             """
 
-            extraction_response = llm.invoke(extraction_prompt)
-
             try:
                 extraction_response = llm.invoke(extraction_prompt)
             except Exception as e:
@@ -102,8 +100,6 @@ if uploaded_file:
             Blood Work Analysis:
             {extracted_values}
             """
-
-            diet_response = llm.invoke(diet_prompt)
 
             try:
                 diet_response = llm.invoke(diet_prompt)

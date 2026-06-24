@@ -1,18 +1,30 @@
 import os
-import sys
 from pathlib import Path
 
 import streamlit as st
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# Load .env from project root
+# Local development
 project_root = Path(__file__).parent.parent
 load_dotenv(project_root / ".env")
+
+# Get API key from .env or Streamlit Secrets
+api_key = os.getenv("GOOGLE_API_KEY")
+
+if not api_key:
+    api_key = st.secrets.get("GOOGLE_API_KEY")
+
+if not api_key:
+    st.error("GOOGLE_API_KEY not found.")
+    st.stop()
+
+st.write("API key found:", bool(api_key))
 
 # Initialize Gemini
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
+    google_api_key=api_key,
     temperature=0
 )
 

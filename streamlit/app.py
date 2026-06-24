@@ -74,6 +74,12 @@ if uploaded_file:
 
             extraction_response = llm.invoke(extraction_prompt)
 
+            try:
+                extraction_response = llm.invoke(extraction_prompt)
+            except Exception as e:
+                st.exception(e)
+                st.stop()
+
             extracted_values = (
                 extraction_response.content
                 if hasattr(extraction_response, "content")
@@ -98,6 +104,12 @@ if uploaded_file:
             """
 
             diet_response = llm.invoke(diet_prompt)
+
+            try:
+                diet_response = llm.invoke(diet_prompt)
+            except Exception as e:
+                st.exception(e)
+                st.stop()
 
             diet_plan = (
                 diet_response.content
